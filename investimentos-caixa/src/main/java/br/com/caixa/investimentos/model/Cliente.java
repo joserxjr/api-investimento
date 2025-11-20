@@ -21,8 +21,7 @@ public class Cliente {
 
     public Cliente(VolumeInvestimento volumeInvestimento,
                    FrequenciaMovimentacao frequenciaMovimentacao,
-                   PreferenciaInvestimento preferenciaInvestimento,
-                   PerfilRisco perfilRisco) {
+                   PreferenciaInvestimento preferenciaInvestimento) {
         this.volumeInvestimento = volumeInvestimento;
         this.frequenciaMovimentacao = frequenciaMovimentacao;
         this.preferenciaInvestimento = preferenciaInvestimento;
@@ -31,14 +30,6 @@ public class Cliente {
 
     public Cliente() {
 
-    }
-
-    public PerfilRisco getPerfilRisco() {
-        return perfilRisco;
-    }
-
-    public void setPerfilRisco(PerfilRisco perfilRisco) {
-        this.perfilRisco = perfilRisco;
     }
 
     public Long getId() {
@@ -64,7 +55,7 @@ public class Cliente {
 
     public void setFrequenciaMovimentacao(FrequenciaMovimentacao frequenciaMovimentacao) {
         this.frequenciaMovimentacao = frequenciaMovimentacao;
-        recalcularPerfil(); // Recalcula quando muda característica
+        recalcularPerfil();
     }
 
     public PreferenciaInvestimento getPreferenciaInvestimento() {
@@ -76,14 +67,23 @@ public class Cliente {
         recalcularPerfil();
     }
 
-    private PerfilRisco calcularPerfilRisco() {
-        if (volumeInvestimento == null || frequenciaMovimentacao == null || preferenciaInvestimento == null) {
-            return PerfilRisco.CONSERVADOR;
-        }
+    public PerfilRisco getPerfilRisco() {
+        return perfilRisco;
+    }
 
-        int pontuacao = volumeInvestimento.getPontos() +
+
+
+    public int calcularPontuacao() {
+        if (volumeInvestimento == null || frequenciaMovimentacao == null || preferenciaInvestimento == null) {
+            return 0;
+        }
+        return volumeInvestimento.getPontos() +
                 frequenciaMovimentacao.getPontos() +
                 preferenciaInvestimento.getPontos();
+    }
+
+    private PerfilRisco calcularPerfilRisco() {
+        int pontuacao = calcularPontuacao();
 
         if (pontuacao <= 40) {
             return PerfilRisco.CONSERVADOR;
@@ -94,11 +94,8 @@ public class Cliente {
         }
     }
 
-    public void recalcularPerfil() {
+    private void recalcularPerfil() {
         this.perfilRisco = calcularPerfilRisco();
     }
-
-
-
 
 }

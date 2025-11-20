@@ -25,8 +25,7 @@ public class DataInitializer implements CommandLineRunner {
             Cliente cliente1 = new Cliente(
                     VolumeInvestimento.BAIXO,
                     FrequenciaMovimentacao.ALTA,
-                    PreferenciaInvestimento.LIQUIDEZ,
-                    PerfilRisco.CONSERVADOR
+                    PreferenciaInvestimento.LIQUIDEZ
             );
             clienteRepository.save(cliente1);
 
@@ -34,8 +33,7 @@ public class DataInitializer implements CommandLineRunner {
             Cliente cliente2 = new Cliente(
                     VolumeInvestimento.ALTO,
                     FrequenciaMovimentacao.BAIXA,
-                    PreferenciaInvestimento.LIQUIDEZ,
-                    PerfilRisco.CONSERVADOR
+                    PreferenciaInvestimento.LIQUIDEZ
             );
             clienteRepository.save(cliente2);
 
@@ -43,8 +41,7 @@ public class DataInitializer implements CommandLineRunner {
             Cliente cliente3 = new Cliente(
                     VolumeInvestimento.ALTO,
                     FrequenciaMovimentacao.BAIXA,
-                    PreferenciaInvestimento.RENTABILIDADE,
-                    PerfilRisco.CONSERVADOR
+                    PreferenciaInvestimento.RENTABILIDADE
             );
             clienteRepository.save(cliente3);
 
