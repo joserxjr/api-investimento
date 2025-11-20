@@ -1,10 +1,13 @@
 br\com\caixa\investimentos\controller\PerfilRiscoController.class
+br\com\caixa\investimentos\service\ProdutoRecomendadoService.class
 br\com\caixa\investimentos\model\PreferenciaInvestimento.class
 br\com\caixa\investimentos\dto\PerfilRiscoResponse.class
 br\com\caixa\investimentos\model\VolumeInvestimento.class
 br\com\caixa\investimentos\service\PerfilRiscoService.class
+br\com\caixa\investimentos\service\ProdutoRecomendadoService$1.class
 br\com\caixa\investimentos\dto\SimulacaoHistoricoResponse.class
 br\com\caixa\investimentos\service\SimulacaoService.class
+br\com\caixa\investimentos\controller\ProdutoRecomendadoController.class
 br\com\caixa\investimentos\service\PerfilRiscoService$1.class
 br\com\caixa\investimentos\model\FrequenciaMovimentacao.class
 br\com\caixa\investimentos\controller\SimulacaoController.class
