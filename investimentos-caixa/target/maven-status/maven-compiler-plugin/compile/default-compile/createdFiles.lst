@@ -1,0 +1,4 @@
+br\com\caixa\investimentos\model\PreferenciaInvestimento.class
+br\com\caixa\investimentos\dto\PerfilRiscoResponse.class
+br\com\caixa\investimentos\model\VolumeInvestimento.class
+br\com\caixa\investimentos\model\FrequenciaMovimentacao.class
