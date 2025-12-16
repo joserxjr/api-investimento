@@ -1,12 +1,15 @@
 package br.com.caixa.investimentos.service;
 
 import br.com.caixa.investimentos.dto.*;
+import br.com.caixa.investimentos.exception.BusinessRuleException;
+import br.com.caixa.investimentos.exception.ResourceNotFoundException;
 import br.com.caixa.investimentos.model.*;
 import br.com.caixa.investimentos.repository.*;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.nio.file.ReadOnlyFileSystemException;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -30,12 +33,12 @@ public class InvestimentoService {
 
     public SimulacaoResponse simularInvestimento(SimulacaoRequest request) {
         Cliente cliente = clienteRepository.findById(request.clienteId())
-                .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado"));
 
         validarPerfilProduto(cliente.getPerfilRisco(), request.tipoProduto());
 
         Produto produto = produtoRepository.findByTipo(request.tipoProduto())
-                .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Produto não encontrado"));
 
         BigDecimal valorFinal = calcularValorFinal(request.valor(), produto.getRentabilidade(),
                                                request.prazoMeses());
@@ -78,16 +81,13 @@ public class InvestimentoService {
         };
 
         if (!produtosPermitidos.contains(tipoProduto)) {
-            throw new RuntimeException("Produto " + tipoProduto + " não permitido para perfil " + perfil);
+            throw new BusinessRuleException("Produto " + tipoProduto + " não permitido para perfil " + perfil);
         }
     }
 
-    private BigDecimal calcularValorFinal(BigDecimal valorInicial,
-                                          BigDecimal rentabilidade,
-                                          int prazoMeses) {
+    private BigDecimal calcularValorFinal(BigDecimal valorInicial, BigDecimal rentabilidade, int prazoMeses) {
 
-        BigDecimal anos = new BigDecimal(prazoMeses)
-                .divide(new BigDecimal("12"), 10, RoundingMode.HALF_UP);
+        BigDecimal anos = new BigDecimal(prazoMeses).divide(new BigDecimal("12"), 10, RoundingMode.HALF_UP);
 
         BigDecimal umMaisRentabilidade = BigDecimal.ONE.add(rentabilidade);
         BigDecimal fator = potencia(umMaisRentabilidade, anos);

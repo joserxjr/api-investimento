@@ -3,6 +3,9 @@ package br.com.caixa.investimentos.controller;
 import br.com.caixa.investimentos.dto.SimulacaoRequest;
 import br.com.caixa.investimentos.dto.SimulacaoResponse;
 import br.com.caixa.investimentos.service.InvestimentoService;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,12 +20,8 @@ public class InvestimentoController {
     }
 
     @PostMapping("/simular-investimento")
-    public ResponseEntity<SimulacaoResponse> simularInvestimento(@RequestBody SimulacaoRequest request) {
-        try {
+    public ResponseEntity<SimulacaoResponse> simularInvestimento(@Valid @RequestBody SimulacaoRequest request) {
             SimulacaoResponse response = investimentoService.simularInvestimento(request);
-            return ResponseEntity.ok(response);
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().build();
-        }
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 }

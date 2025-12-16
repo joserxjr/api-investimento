@@ -1,6 +1,7 @@
 package br.com.caixa.investimentos.service;
 
 import br.com.caixa.investimentos.dto.PerfilRiscoResponse;
+import br.com.caixa.investimentos.exception.ResourceNotFoundException;
 import br.com.caixa.investimentos.model.Cliente;
 import br.com.caixa.investimentos.repository.ClienteRepository;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,7 @@ public class PerfilRiscoService {
 
     public PerfilRiscoResponse obterPerfilRisco(Long clienteId) {
         Cliente cliente = clienteRepository.findById(clienteId)
-                .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado"));
 
         int pontuacao = cliente.calcularPontuacao();
         String descricao = obterDescricaoPerfil(cliente.getPerfilRisco());

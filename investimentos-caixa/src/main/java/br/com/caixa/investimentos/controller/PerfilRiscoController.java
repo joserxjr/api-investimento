@@ -22,13 +22,7 @@ public class PerfilRiscoController {
 
     @GetMapping("/perfil-risco/{clienteId}")
     public ResponseEntity<PerfilRiscoResponse> obterPerfilRisco(@PathVariable Long clienteId) {
-        try {
             PerfilRiscoResponse response = perfilRiscoService.obterPerfilRisco(clienteId);
             return ResponseEntity.ok(response);
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
     }
-
-
 }

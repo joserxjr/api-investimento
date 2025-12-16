@@ -1,6 +1,7 @@
 package br.com.caixa.investimentos.service;
 
 import br.com.caixa.investimentos.dto.SimulacaoHistoricoResponse;
+import br.com.caixa.investimentos.exception.ResourceNotFoundException;
 import br.com.caixa.investimentos.model.Produto;
 import br.com.caixa.investimentos.model.Simulacao;
 import br.com.caixa.investimentos.repository.ClienteRepository;
@@ -29,7 +30,7 @@ public class SimulacaoService {
 
 
         if (!clienteRepository.existsById(clienteId)) {
-            throw new RuntimeException("Cliente não encontrado");
+            throw new ResourceNotFoundException("Cliente", "id", clienteId);
         }
 
         List<Simulacao> simulacoes = simulacaoRepository.findByClienteId(clienteId);

@@ -22,15 +22,8 @@ public class ProdutoRecomendadoController {
     }
 
     @GetMapping("/produtos-recomendados/{perfil}")
-    public ResponseEntity<List<ProdutoValidado>> obterProdutosRecomendados(
-            @PathVariable String perfil) {
-        try {
+    public ResponseEntity<List<ProdutoValidado>> obterProdutosRecomendados(@PathVariable String perfil) {
             List<ProdutoValidado> produtos = produtoRecomendadoService.obterProdutosRecomendados(perfil);
             return ResponseEntity.ok(produtos);
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().build();
-        }
     }
-
-
 }

@@ -21,16 +21,9 @@ public class SimulacaoController {
     }
 
     @GetMapping("/simulacoes")
-    public ResponseEntity<List<SimulacaoHistoricoResponse>> buscarSimulacoes(
-            @RequestParam Long clienteId) {
-        try {
-            List<SimulacaoHistoricoResponse> historico =
-                    simulacaoService.buscarHistoricoSimulacoes(clienteId);
+    public ResponseEntity<List<SimulacaoHistoricoResponse>> buscarSimulacoes(@RequestParam Long clienteId) {
+            List<SimulacaoHistoricoResponse> historico = simulacaoService.buscarHistoricoSimulacoes(clienteId);
             return ResponseEntity.ok(historico);
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
     }
-
 
 }

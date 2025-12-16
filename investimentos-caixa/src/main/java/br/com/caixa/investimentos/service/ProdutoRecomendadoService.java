@@ -2,6 +2,7 @@ package br.com.caixa.investimentos.service;
 
 
 import br.com.caixa.investimentos.dto.ProdutoValidado;
+import br.com.caixa.investimentos.exception.InvalidDataException;
 import br.com.caixa.investimentos.model.PerfilRisco;
 import br.com.caixa.investimentos.model.Produto;
 import br.com.caixa.investimentos.repository.ProdutoRepository;
@@ -21,11 +22,13 @@ public class ProdutoRecomendadoService {
     }
 
     public List<ProdutoValidado> obterProdutosRecomendados(String perfil){
+
         PerfilRisco perfilRisco;
+
         try {
             perfilRisco = PerfilRisco.valueOf(perfil.toUpperCase());
         } catch (IllegalArgumentException e) {
-            throw new RuntimeException("Perfil inválido: " + perfil);
+            throw new InvalidDataException("Perfil de risco obrigatório{CONSERVADOR, MODERADO OU ARROJADO}", "Perfil de risco");
         }
 
         List<String> tiposPermitidos = obterTiposPermitidos(perfilRisco);
@@ -36,7 +39,6 @@ public class ProdutoRecomendadoService {
                 .filter(produto -> tiposPermitidos.contains(produto.getTipo()))
                 .map(this::converterParaProdutoValidado)
                 .collect(Collectors.toList());
-
 
     }
 
